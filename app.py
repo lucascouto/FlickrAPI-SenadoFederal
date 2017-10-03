@@ -14,7 +14,8 @@ albums_meta = flickr.photosets.getList(user_id = user)
 albums = albums_meta['photosets']['photoset']
 
 # Total de albuns
-# albums_total = albums_meta['photosets']['total']
+albums_total = albums_meta['photosets']['total']
+print("Total de albuns: " + str(albums_total))
 
 with open('albums_meta.json', 'wb') as outfile:
     json.dump(albums_meta, outfile)
@@ -39,7 +40,7 @@ for albums_id in albums:
     photos_album_meta = flickr.photosets.getPhotos(user_id = user, photoset_id=albums_id[album_index])
     with open('photos_album_meta.json', 'wb') as outfile:
         json.dump(photos_album_meta, outfile)
-    print("Album: " + album_title + " (id: " + albums_id[album_index] + ")") #DEBUG
+    print("Album " + str(album_index+1) +  ": " + album_title + " (id: " + albums_id[album_index] + ")") #DEBUG
     photos_album = photos_album_meta['photoset']['photo']
     with open('photos_album.json', 'wb') as outfile:
         json.dump(photos_album, outfile)
@@ -58,14 +59,16 @@ for albums_id in albums:
             json.dump(photo_info, outfile)
         photo_url = photo_info['urls']['url'][0]['_content']
 
-        '''
-        photo_description = photo_info['description']['_content']
+
+        #photo_description = photo_info['description']['_content']
         photo_title = photo_info['title']['_content']
         photo_views = photo_info['views']
-        '''
 
-        print("\t\t Foto " + str(photos_index) + ": " + str(photo_id[photos_index])) #para debug
+
+        print("\t\tFoto " + str(photos_index+1) + ": " + photo_title +  " (id: " + str(photo_id[photos_index]) + ")") #para debug
         print("\t\t" + photo_url) #para debug
+        #print("\t\t\t" + photo_description)
+        print("\t\tVisualizacoes: " + photo_views + "\n\n")
 
         photos_index += 1
     album_index += 1
